@@ -14,11 +14,10 @@ module.exports = {
     rinkeby: {
       provider: function() {
         return new HDWalletProvider(truffle_secrets.mnemonic,
-                                    truff_secrets.url);
+                                    truffle_secrets.url);
       },
-      //port: "443",
+      port: "443",
       network_id: "4", // Rinkeby ID 4
-      from: "0xd074C687A92Ee8Ad583215Fb8Ee2FA3D653660D3",
       gas: 6712390
     }
   }
