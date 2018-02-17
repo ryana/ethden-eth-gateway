@@ -317,9 +317,9 @@ contract QuickETH is ERC721, Ownable {
    * integration easier.
    */
   function exchange(uint256 tokenId) public {
-    address tokenOwner = qetIndexToOwner[tokenId];
+    address _tokenOwner = qetIndexToOwner[tokenId];
     require(msg.sender != 0);
-    require((tokenOwner == msg.sender) || (owner == msg.sender));
+    require((_tokenOwner == msg.sender) || (owner == msg.sender));
     require(block.timestamp >= qets[tokenId].revocationPeriodExpiresAt);
     
     uint256 amount = qets[tokenId].amount;
@@ -327,7 +327,7 @@ contract QuickETH is ERC721, Ownable {
     qets[tokenId].revocationPeriodExpiresAt = 0;
 
     _burn(tokenId);
-    tokenOwner.transfer(amount);
+    _tokenOwner.transfer(amount);
   }
 
   /**
