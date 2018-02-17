@@ -65,7 +65,7 @@ app.post("/mint", async function(req, res) {
   var txId;
 
   try {
-    txId = await web3.eth.sendRawTransaction(serializedTx.toString('hex'));
+    txId = await web3.eth.sendRawTransaction("0x" + serializedTx.toString('hex'));
     // let filter = web3.eth.filter('latest')
     // https://ethereum.stackexchange.com/questions/12579/how-to-watch-for-12th-confirmation-with-web3-filters
   } catch(err) {
