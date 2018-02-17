@@ -37,6 +37,7 @@ app.post("/mint", async function(req, res) {
   let amount = Number((new web3.BigNumber(web3.toWei(Number(req.body.amount), 'ether'))).toString());
   let ts = Math.round((new Date() / 1000) + (60 * 60 * 24 * 90));
 
+  console.log(newOwner, amount, ts);
   var payloadData = instance.
     mint.
     getData(newOwner, amount, ts);
