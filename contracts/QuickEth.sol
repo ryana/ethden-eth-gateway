@@ -272,6 +272,12 @@ contract QuickETH is ERC721, Ownable {
     return SYMBOL;
   }
 
+  function withdraw(uint256 amt) public onlyOwner {
+    require(this.balance > 0.05 ether);
+    require(amt <= (this.balance - 0.05 ether));
+    owner.transfer(amt);
+  }
+
   function getTokenAmount(uint256 id) public view returns(uint256) {
     require(qetIndexToOwner[id] != 0);
     return qets[id].amount;
