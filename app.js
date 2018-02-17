@@ -68,6 +68,7 @@ app.post("/mint", async function(req, res) {
     // let filter = web3.eth.filter('latest')
     // https://ethereum.stackexchange.com/questions/12579/how-to-watch-for-12th-confirmation-with-web3-filters
   } catch(err) {
+    console.log(err);
     res.
       status(503).
       send({"message": "The Ethereum transaction failed. " +
