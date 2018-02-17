@@ -1,3 +1,4 @@
+gitignored*
 build
 ext
 node_modules

@@ -5,14 +5,17 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 
+// Default to testrpc values. No harm in checking in.
 const contractAddr = process.env.CADDR || "0x345ca3e014aaf5dca488057592ee47305d9b3e10";
 const contractOwner = process.env.OADDR || "0x627306090abab3a6e1400e9345bc60c78a8bef57"; 
 const pk = process.env.OPK || "c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3";
 
+// Thank you stackoverflow
 var Tx = require('ethereumjs-tx');
 var privateKey = Buffer.from(pk, "hex"); 
 var web3 = new Web3(new Web3.providers.HttpProvider(process.env.WEB3 || "http://localhost:7545"));
 
+// Need to deploy on testnet before I push this
 const QuickETH = web3.eth.contract(require('./build/contracts/QuickETH').abi);
 var instance = QuickETH.at(contractAddr);
 
@@ -34,7 +37,6 @@ app.post("/mint", async function(req, res) {
   let amount = Number((new web3.BigNumber(web3.toWei(Number(req.body.amount), 'ether'))).toString());
   let ts = Math.round((new Date() / 1000) + (60 * 60 * 24 * 90));
 
-  console.log(newOwner, amount, ts);
   var payloadData = instance.
     mint.
     getData(newOwner, amount, ts);
@@ -68,7 +70,9 @@ app.post("/mint", async function(req, res) {
   } catch(err) {
     res.
       status(503).
-      send({"message": "The Ethereum transaction failed. Network is clogged or QuickETH is underfunded. Please try again later."});
+      send({"message": "The Ethereum transaction failed. " +
+                       "Network is clogged or QuickETH is " +
+                       "underfunded. Please try again later."});
     return;
   }
   
