@@ -84,7 +84,7 @@ app.post("/mint", async function(req, res) {
   let finalTokenOwnerBalance = await web3.eth.getBalance(newOwner);
   let finalTokenOwnerTokenCount = await instance.balanceOf(newOwner);
 
-  res.status(201).send({
+  let resObj = {
     "transactionId": txId,
     "initialSupply": initialSupply,
     "initialAvailableBalance": initialAvailableBalance,
@@ -93,7 +93,11 @@ app.post("/mint", async function(req, res) {
     "finalContractBalance": finalContractBalance,
     "finalTokenOwnerBalance": finalTokenOwnerBalance,
     "finalTokenOwnerTokenCount": finalTokenOwnerTokenCount
-  });
+  };
+
+  console.log(resObj);
+
+  res.status(201).send(resObj);
 });
 
 app.set('port', (process.env.PORT || 5000));
